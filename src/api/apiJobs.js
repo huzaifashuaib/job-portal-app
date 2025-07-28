@@ -15,8 +15,6 @@ export const getJobs = async (token, { location, company_id, queryString }) => {
     query = query.ilike("title", `%${queryString}%`);
   }
 
-  console.log("queryString", queryString);
-
   const { data, error } = await query;
 
   if (error) {
@@ -27,7 +25,6 @@ export const getJobs = async (token, { location, company_id, queryString }) => {
 };
 
 export const savedJob = async (token, { alreadySave }, savedData) => {
-  console.log(token, alreadySave, savedData);
   const supabase = await supabaseClient(token);
   if (alreadySave) {
     const { data, error: deleteError } = await supabase
@@ -90,6 +87,44 @@ export const addNewJob = async (token, _, jobData) => {
     .select();
   if (error) {
     console.error("insert Job Error :", error);
+    return null;
+  }
+  return data;
+};
+
+export const getAllSavedJobs = async (token) => {
+  const supabase = await supabaseClient(token);
+  const { data: savedJobData, error: savedJobError } = await supabase
+    .from("saved_jobs")
+    .select("*, job:jobs(*, company:companies(name, logo_url))");
+  if (savedJobError) {
+    console.error("saved Jobs fetching error", savedJobError);
+    return null;
+  }
+  return savedJobData;
+};
+export const getAllJobsOfRecuriter = async (token, { recruiter_id }) => {
+  const supabase = await supabaseClient(token);
+  const { data, error: jobError } = await supabase
+    .from("jobs")
+    .select("*,  company:companies(name, logo_url))")
+    .eq("recruiter_id", recruiter_id);
+  if (jobError) {
+    console.error(" Jobs fetching error", jobError);
+    return null;
+  }
+  return data;
+};
+
+export const deleteJob = async (token, { job_id }) => {
+  const supabase = await supabaseClient(token);
+  const { data, error: deleteError } = await supabase
+    .from("jobs")
+    .delete()
+    .eq("id", job_id)
+    .select();
+  if (deleteError) {
+    console.error(" Jobs Delete error", deleteError);
     return null;
   }
   return data;
