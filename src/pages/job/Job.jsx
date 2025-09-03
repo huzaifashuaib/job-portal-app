@@ -51,7 +51,7 @@ const Job = () => {
     return <BarLoader width={"100%"} color={"#36d7b7"} className="mb-4" />;
   }
   return (
-    <div className="flex flex-col gap-8 mt-6">
+    <div className="flex flex-col gap-8 mt-5">
       <div className="flex items-center justify-between flex-col-reverse gap-6 md:flex-row">
         <h1 className="gredient-title font-extrabold text-4xl sm:text-6xl pb-3 tracking-tighter">
           {job?.title}

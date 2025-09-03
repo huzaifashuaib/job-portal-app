@@ -1,5 +1,5 @@
 import Header from "@/components/header/Header";
-import React, { useContext } from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
 
 const AppLayout = () => {
