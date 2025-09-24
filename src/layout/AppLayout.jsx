@@ -10,7 +10,7 @@ const AppLayout = () => {
         <Header />
         <Outlet />
       </main>
-      <footer className="py-3 text-center bg-gray-800 text-lg mt-15">
+      <footer className="py-3 text-center bg-gray-800 text-lg mt-12">
         Made with 💻 by Huzaifa Shoaib
       </footer>
     </div>
